@@ -2,17 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:pertemuan4/main.dart';
 import 'package:pertemuan4/page/beranda_page.dart';
 
-class ProfilePage extends StatefulWidget {
-  ProfilePage({super.key});
+class ProfilePage extends StatelessWidget {
+  final Map<String, String> data;
 
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  List<Widget> _page = [BerandaPage(), ProfilePage()];
-
-  int currentPage = 0;
+  const ProfilePage({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -20,135 +13,70 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.zero,
           child: Column(
             children: [
-              // Header dengan Background Image
+              // HEADER
               Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      'https://images.unsplash.com/photo-150480572947-34fad45aed93?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3ODI1MDAwMTAyNTgxNzg5OjQzMDY2NzU=',
-                      scale: 1.0,
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Container(
-                  width: double.infinity,
-                  height: 200,
-                  child: Container(
-                    alignment: Alignment(0.0, 2.5),
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        'https://images.unsplash.com/photo-17256381863-8ca1776e126a?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3ODI1MDAwMTAyNTgxNzg5OjQzMDY2NzU=',
-                      ),
-                      radius: 60.0,
-                    ),
+                height: 180,
+                color: Colors.blue.shade200,
+                child: Center(
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.white,
+                    child: Icon(Icons.person, size: 50),
                   ),
                 ),
               ),
 
-              // Nama
-              SizedBox(height: 60),
+              const SizedBox(height: 10),
+
               Text(
                 "Willy Abdul",
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.blueGrey,
-                  letterSpacing: 2.0,
-                  fontWeight: FontWeight.w400,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
+              Text("Jakarta, Indonesia"),
+              Text("Flutter Software Engineer"),
 
-              // Lokasi
-              SizedBox(height: 10),
-              Text(
-                "Jakarta, Indonesia",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black45,
-                  letterSpacing: 2.0,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
+              const SizedBox(height: 20),
 
-              // Pekerjaan
-              SizedBox(height: 10),
-              Text(
-                "Flutter Software Engineer",
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black45,
-                  letterSpacing: 2.0,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-
-              // Card Statistik
-              SizedBox(height: 7),
+              // CARD PROJECT
               Card(
-                color: Colors.white,
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                margin: EdgeInsets.symmetric(horizontal: 20),
                 child: Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(12),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // Project
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Text(
-                              "Project",
-                              style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            SizedBox(height: 7),
-                            Text(
-                              "41",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      // Followers
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Text(
-                              "Followers",
-                              style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            SizedBox(height: 7),
-                            Text(
-                              "2308",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: const [
+                      Column(children: [Text("Project"), Text("42")]),
+                      Column(children: [Text("Followers"), Text("2308")]),
                     ],
                   ),
                 ),
               ),
 
-              SizedBox(height: 50),
+              const SizedBox(height: 20),
+
+              // SUMMARY
+              ListTile(
+                title: Text("Summary"),
+                subtitle: Text(data["summary"] ?? "-"),
+              ),
+
+              // EXPERIENCE
+              ListTile(
+                title: Text("Experience"),
+                subtitle: Text(
+                  "${data["experience"] ?? "-"}\n${data["tahun"] ?? ""}",
+                ),
+              ),
+
+              // PENDIDIKAN
+              ListTile(
+                title: Text("Pendidikan"),
+                subtitle: Text(
+                  "${data["sekolah"] ?? "-"}\n${data["tahunSekolah"] ?? ""}",
+                ),
+              ),
             ],
           ),
         ),
