@@ -1,0 +1,110 @@
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:flutter/material.dart';
+import 'package:pertemuan4/main.dart';
+import 'package:pertemuan4/page/profile_page.dart';
+import 'package:simple_alert_dialog/simple_alert_dialog.dart';
+
+class BerandaPage extends StatefulWidget {
+  const BerandaPage({super.key});
+
+  @override
+  State<BerandaPage> createState() => _BerandaPageState();
+}
+
+class _BerandaPageState extends State<BerandaPage> {
+  // ⚠️ Hindari recursive widget
+  List<Widget> _page = [Container(), ProfilePage()];
+
+  int currentPage = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blueAccent,
+        title: const Text("Pertemuan 4"),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            // Tombol Submit
+            const SizedBox(height: 10),
+            InkWell(
+              onTap: () {
+                SimpleAlertDialog.show(
+                  context,
+                  assetImagepath: AnimatedImage.confirm,
+                  buttonsColor: Colors.green, // ✅ sudah benar
+                  title: AlertTitleText("Apakah kamu yakin?"),
+                  content: AlertContentText(
+                    "Apakah kamu ingin menambahkan data",
+                  ),
+                  onConfirmButtonPressed: (ctx) {
+                    CherryToast.success(
+                      inheritThemeColors: true, // ✅ FIX
+                      title: const Text("Berhasil menambahkan data!"),
+                      borderRadius: 0,
+                    ).show(context);
+                    Navigator.pop(context);
+                  },
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Text(
+                  "Submit",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+
+            // Tombol Delete
+            const SizedBox(height: 10),
+            InkWell(
+              onTap: () {
+                SimpleAlertDialog.show(
+                  context,
+                  assetImagepath: AnimatedImage.warning,
+                  buttonsColor: Colors.green, // ✅ FIX (hapus 's')
+                  title: AlertTitleText("Apakah kamu yakin?"),
+                  content: AlertContentText("Apakah kamu ingin menghapus data"),
+                  onConfirmButtonPressed: (ctx) {
+                    CherryToast.success(
+                      inheritThemeColors: true, // ✅ FIX
+                      title: const Text("Berhasil menghapus data!"),
+                      borderRadius: 0,
+                    ).show(context);
+                    Navigator.pop(context);
+                  },
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Text(
+                  "Delete",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
